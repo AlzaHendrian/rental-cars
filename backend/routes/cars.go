@@ -15,7 +15,7 @@ func CarsRoute(e *echo.Group) {
 
 	e.GET("/cars", h.FindCar)
 	e.GET("/car/:id", h.GetCar)
-	e.POST("/car", middleware.Auth(middleware.UploadFile(h.CreateCar)))
-	e.PATCH("/car/:id", middleware.Auth(middleware.UploadFile(h.UpdateCar)))
-	e.DELETE("/car/:id", middleware.Auth(h.DeleteCar))
+	e.POST("/car", middleware.UploadFile(h.CreateCar))
+	e.PATCH("/car/:id", middleware.UploadFile(h.UpdateCar))
+	e.DELETE("/car/:id", h.DeleteCar)
 }

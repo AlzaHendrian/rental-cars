@@ -20,14 +20,14 @@ func RepositoryCar(db *gorm.DB) *repository {
 
 func (repo *repository) FindCars() ([]models.Cars, error) {
 	var cars []models.Cars
-	err := repo.db.Find(&cars).Error
+	err := repo.db.Preload("User").Find(&cars).Error
 
 	return cars, err
 }
 
 func (repo *repository) GetCar(ID int) (models.Cars, error) {
 	var car models.Cars
-	err := repo.db.First(&car, ID).Error
+	err := repo.db.Preload("User").First(&car, ID).Error
 
 	return car, err
 }

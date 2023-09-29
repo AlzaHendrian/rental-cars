@@ -7,4 +7,6 @@ type CreateRequestOrder struct {
 	TimeDropoffDate time.Time `json:"dropoff_date" form:"dropoff_date" validate:"required"`
 	PickupLocation  string    `json:"pickup_location" form:"pickup_location" validate:"required"`
 	DropoffLocation string    `json:"dropoff_location" form:"dropoff_location" validate:"required"`
+	CarID           int       `json:"car_id" form:"car_id" validate:"required"`
+	UserID          int       `json:"user_id"`
 }

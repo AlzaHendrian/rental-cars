@@ -6,4 +6,6 @@ type Cars struct {
 	DayRate   float64 `json:"day_rate"`
 	MonthRate float64 `json:"month_rate"`
 	Image     string  `json:"image" gorm:"type: varchar(255)"`
+	UserID    int     `json:"user_id"`
+	User      User    `json:"user"`
 }
