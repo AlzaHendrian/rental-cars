@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { AddCarPage } from "../pages/formcarpage/Index";
 import { UserContext } from "../context/UserContext";
 import { API, setAuthToken } from "../config/Api";
+import OrderPage from "../pages/orderpage/Index";
 
 const Navigation = ({ dataCar, getData }) => {
   let navigate = useNavigate();
@@ -64,6 +65,7 @@ const Navigation = ({ dataCar, getData }) => {
         <Route path="/add-car" element={<AddCarPage dataCar={dataCar} getData={getData} />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/show-order" element={<OrderPage />} />
       </Routes>
     </>
   );

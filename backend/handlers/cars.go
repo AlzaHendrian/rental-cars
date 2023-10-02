@@ -49,14 +49,12 @@ func (h *handler) CreateCar(c echo.Context) error {
 	dataFile := c.Get("dataFile").(string)
 	dayRate, _ := strconv.Atoi(c.FormValue("day_rate"))
 	monthRate, _ := strconv.Atoi(c.FormValue("month_rate"))
-	userID, _ := strconv.Atoi(c.FormValue("user_id"))
 
 	request := carsdto.CreateCar{
 		CarName:   c.FormValue("car_name"),
 		DayRate:   float64(dayRate),
 		MonthRate: float64(monthRate),
 		Image:     dataFile,
-		UserID:    userID,
 	}
 
 	validation := validator.New()
@@ -80,12 +78,11 @@ func (h *handler) CreateCar(c echo.Context) error {
 		fmt.Println(err.Error())
 	}
 
-	car := models.Cars{
+	car := models.Car{
 		CarName:   request.CarName,
 		DayRate:   request.DayRate,
 		MonthRate: request.MonthRate,
 		Image:     resp.SecureURL,
-		UserID:    request.UserID,
 	}
 
 	data, err := h.CarRepository.CreateCar(car)
@@ -103,10 +100,6 @@ func (h *handler) UpdateCar(c echo.Context) error {
 	dataFile := c.Get("dataFile").(string)
 	dayRate, _ := strconv.Atoi(c.FormValue("day_rate"))
 	monthRate, _ := strconv.Atoi(c.FormValue("month_rate"))
-	userID, err := strconv.Atoi(c.FormValue("user_id"))
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: "input user_id error"})
-	}
 
 	request := carsdto.CreateCar{
 		CarID:     carID,
@@ -114,11 +107,10 @@ func (h *handler) UpdateCar(c echo.Context) error {
 		DayRate:   float64(dayRate),
 		MonthRate: float64(monthRate),
 		Image:     dataFile,
-		UserID:    userID,
 	}
 
 	validation := validator.New()
-	err = validation.Struct(request)
+	err := validation.Struct(request)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, dto.ErrorResult{Code: http.StatusInternalServerError, Message: err.Error()})
 	}
@@ -160,18 +152,6 @@ func (h *handler) UpdateCar(c echo.Context) error {
 		car.Image = resp.SecureURL
 	}
 
-	if request.UserID != 0 {
-		car.UserID = request.UserID
-	}
-
-	// car.CarID = request.CarID
-	// car.CarName = request.CarName
-	// car.DayRate = request.DayRate
-	// car.MonthRate = request.MonthRate
-	// car.Image = resp.SecureURL
-	// car.UserID = request.UserID
-
-	fmt.Println(car.UserID, "<<<< ini car UserID")
 	fmt.Println(car.CarID, "<<<< ini car CarID")
 
 	data, err := h.CarRepository.UpdateCar(car)
@@ -180,7 +160,6 @@ func (h *handler) UpdateCar(c echo.Context) error {
 	}
 
 	fmt.Println(car)
-	fmt.Println("testttttttttt,", request.UserID)
 
 	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: data})
 }
@@ -201,12 +180,11 @@ func (h *handler) DeleteCar(c echo.Context) error {
 	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: convertResponse(data)})
 }
 
-func convertResponse(u models.Cars) carsdto.ResponseCars {
+func convertResponse(u models.Car) carsdto.ResponseCars {
 	return carsdto.ResponseCars{
 		CarName:   u.CarName,
 		DayRate:   u.DayRate,
 		MonthRate: u.MonthRate,
 		Image:     u.Image,
-		UserID:    u.UserID,
 	}
 }

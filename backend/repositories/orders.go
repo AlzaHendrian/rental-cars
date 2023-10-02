@@ -20,26 +20,37 @@ func RepositoryOrder(db *gorm.DB) *repository {
 
 func (repo *repository) FindOrders() ([]models.Order, error) {
 	var orders []models.Order
-	err := repo.db.Find(&orders).Error
+	err := repo.db.Preload("Car").Preload("User", func(db *gorm.DB) *gorm.DB {
+		return db.Select("id", "name", "email").Table("users")
+	}).Find(&orders).Error
 
 	return orders, err
 }
 
+func (r *repository) FindOrderByUser(UserID int) ([]models.Order, error) {
+	var transaction []models.Order
+	err := r.db.Preload("Car").Where("user_id = ?", UserID).Error
+
+	return transaction, err
+}
+
 func (repo *repository) GetOrder(ID int) (models.Order, error) {
 	var order models.Order
-	err := repo.db.First(&order, ID).Error
+	err := repo.db.Preload("Car").Preload("User", func(db *gorm.DB) *gorm.DB {
+		return db.Select("id", "name", "email").Table("users")
+	}).First(&order, ID).Error
 
 	return order, err
 }
 
 func (repo *repository) CreateOrder(order models.Order) (models.Order, error) {
-	err := repo.db.Create(&order).Error
+	err := repo.db.Preload("Car").Create(&order).Error
 
 	return order, err
 }
 
 func (repo *repository) UpdateOrder(order models.Order) (models.Order, error) {
-	err := repo.db.Save(&order).Error
+	err := repo.db.Preload("Car").Save(&order).Error
 
 	return order, err
 }

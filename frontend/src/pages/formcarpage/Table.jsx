@@ -1,5 +1,6 @@
 import React from "react";
 import { API } from "../../config/Api";
+import { FormatNumber } from "../../helper/Index";
 
 const Table = ({dataCar, handleUpdate, getData}) => {
 
@@ -20,10 +21,10 @@ const Table = ({dataCar, handleUpdate, getData}) => {
         <table className="table-cell w-full">
           <thead>
             <tr>
-              <th className="px-4 py-2">car name</th>
-              <th className="px-4 py-2">price/day</th>
-              <th className="px-4 py-2">price/month</th>
-              <th className="px-4 py-2">image</th>
+              <th className="px-4 py-2">Car name</th>
+              <th className="px-4 py-2">Price/day</th>
+              <th className="px-4 py-2">Price/month</th>
+              <th className="px-4 py-2">Image</th>
               <th className="px-4 py-2">Option</th>
             </tr>
           </thead>
@@ -31,8 +32,8 @@ const Table = ({dataCar, handleUpdate, getData}) => {
             {dataCar.map((item) => (
               <tr key={item.car_id}>
                 <td className="border px-4 py-2">{item.car_name}</td>
-                <td className="border px-4 py-2">{item.day_rate}</td>
-                <td className="border px-4 py-2">{item.month_rate}</td>
+                <td className="border px-4 py-2">{FormatNumber(item.day_rate)}</td>
+                <td className="border px-4 py-2">{FormatNumber(item.month_rate)}</td>
                 <td className="border px-4 py-2">{item.image.length > 20 ? item.image.slice(0, 22) + "..." : item.image}</td>
                 <td className="border px-4 py-2">
                     <button 

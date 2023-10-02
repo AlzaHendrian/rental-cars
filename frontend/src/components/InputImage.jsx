@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 
 const InputImage = ({ onChange }) => {
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-    onChange(event);
-  };
 
   return (
     <div className="my-4">
@@ -15,7 +8,8 @@ const InputImage = ({ onChange }) => {
         <input
           type="file"
           className="border rounded p-2"
-          onChange={handleFileChange}
+          onChange={onChange}
+          name={'image'}
         />
       </div>
     </div>

@@ -11,12 +11,12 @@ export const AddCarPage = ({dataCar, getData}) => {
         day_rate: '',
         month_rate: '',
         image: null
-        })
+    })
 
-        const onChange = (e, param, value) => {
+        const onChange = (e) => {
             setFormData({
                 ...formData,
-                [param]: e.target.type === "file" ? e.target.files[0] : value,
+                [e.target.name]: e.target.type === "file" ? e.target.files[0] : e.target.value,
             });
         };
 
@@ -36,6 +36,7 @@ export const AddCarPage = ({dataCar, getData}) => {
             console.log(item)
         }
 
+        console.log(formData, "<<< ini form data di index")
     // post data to api
     const submitData = async() => {
         const postData = new FormData();

@@ -11,11 +11,12 @@ import (
 
 func OrderRoute(e *echo.Group) {
 	OrderRepository := repositories.RepositoryOrder(mysql.DB)
-	h := handler.HandlerOrders(OrderRepository)
+	UserRepository := repositories.RepositoryUser(mysql.DB)
+	CarRepository := repositories.RepositoryCar(mysql.DB)
+	h := handler.HandlerOrders(OrderRepository, UserRepository, CarRepository)
 
 	e.GET("/orders", h.FindOrders)
 	e.GET("/order/:id", h.GetOrder)
-	e.POST("/order", middleware.Auth(middleware.UploadFile(h.CreateOrder)))
-	e.PATCH("/order/:id", middleware.Auth(middleware.UploadFile(h.UpdateOrder)))
+	e.POST("/order", middleware.Auth(h.CreateOrder))
 	e.DELETE("/order/:id", middleware.Auth(h.DeleteOrder))
 }

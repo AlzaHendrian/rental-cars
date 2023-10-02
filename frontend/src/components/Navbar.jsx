@@ -3,8 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 
 const data = [
-    {id: 1, title: 'car page', path: '/show-car'},
-    {id: 2, title: 'add car', path: '/add-car'},
+    {id: 1, title: 'Car page', path: '/show-car'},
+    {id: 2, title: 'Add car', path: '/add-car'},
+    {id: 3, title: 'Show order', path: '/show-order'},
 ]
 
 const Navbar = () => {
@@ -29,7 +30,7 @@ const Navbar = () => {
                 </button>
             </div>
         </div>
-        <div className="grid grid-cols-2 w-[50vh] place-items-center mx-auto">
+        <div className="grid grid-cols-3 w-[28%] place-items-center mx-auto">
             {data.map((item) => (
                 <div key={item.id}>
                     <Link 

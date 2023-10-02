@@ -13,11 +13,11 @@ const LoginPage = () => {
     });
 
     const handleOnChange = (name, value) => {
-        setForm({
-            ...form,
-            [name]: value
-        })
-      };
+      setForm({
+          ...form,
+          [name]: value
+      })
+    };
 
     const login = async () => {
         try {
